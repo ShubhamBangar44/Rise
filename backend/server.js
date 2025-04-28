@@ -3,7 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000; // Important for Render!!
 
 // Middleware
 app.use(cors());
@@ -35,7 +35,6 @@ const products = [
         sizes: ['M', 'L', 'XL'],
         colors: ['Red', 'Blue', 'Pink']
     },
-    
     {
         id: 3,
         name: 'Women\'s Leather Jacket',
@@ -74,6 +73,11 @@ const products = [
     }
 ];
 
+// Default Route
+app.get('/', (req, res) => {
+    res.send('Backend server is running successfully!');
+});
+
 // Routes
 app.get('/api/products', (req, res) => {
     res.json(products);
@@ -90,7 +94,6 @@ app.get('/api/products/:id', (req, res) => {
 
 app.post('/api/orders', (req, res) => {
     const order = req.body;
-    // In a real app, you would save the order to a database
     console.log('New order received:', order);
     res.json({
         message: 'Order received successfully',
@@ -100,6 +103,6 @@ app.post('/api/orders', (req, res) => {
 });
 
 // Start server
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
 });
